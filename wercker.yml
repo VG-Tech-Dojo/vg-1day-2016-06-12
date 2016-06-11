@@ -1,0 +1,73 @@
+box: tcnksm/gox
+test:
+  steps:
+    - setup-go-workspace
+    - script:
+        name: add GOPATH
+        code: |
+            cd original/server
+            export GOPATH=$GOPATH:`pwd`
+    - script:
+        name: go get
+        code: |
+          go get -d -t -v ./...
+    - script:
+        name: test
+        code: |
+          cd original/server/
+build:
+  steps:
+    - setup-go-workspace
+    - script:
+        name: add GOPATH
+        code: |
+            cd original/server
+            export GOPATH=$GOPATH:`pwd`
+    - script:
+        name: go get
+        code: |
+          go get -d -v ./...
+    - script:
+        name: build
+        code: |
+          cd original/server/
+          gox \
+            -os="darwin linux windows" \
+            -arch="386 amd64" \
+            -output="${WERCKER_OUTPUT_DIR}/pkg/{{.OS}}_{{.Arch}}/{{.Dir}}"
+          ls -l ${WERCKER_OUTPUT_DIR}/pkg
+deploy:
+  steps:
+    - setup-go-workspace
+    - script:
+        name: add GOPATH
+        code: |
+            cd original/server
+            export GOPATH=$GOPATH:`pwd`
+    - script:
+        name: go get
+        code: |
+          go get -d -v ./...
+    - script:
+        name: build
+        code: |
+          cd original/server/
+          gox \
+            -os="darwin linux windows" \
+            -arch="386 amd64" \
+            -output="${WERCKER_OUTPUT_DIR}/pkg/{{.OS}}_{{.Arch}}/{{.Dir}}"
+          ls -l ${WERCKER_OUTPUT_DIR}/pkg
+    - tcnksm/zip:
+        input: $WERCKER_OUTPUT_DIR/pkg
+        output: $WERCKER_OUTPUT_DIR/dist
+    - script:
+        name: set release tag
+        code: |
+            export RELEASE_TAG=`date +"%Y%m%d`
+    - tcnksm/ghr:
+        owner: VG-Tech-Dojo
+        token: $GITHUB_TOKEN
+        input: $WERCKER_OUTPUT_DIR/dist
+        replace: true
+        version: $RELEASE_TAG
+        opt: --draft
