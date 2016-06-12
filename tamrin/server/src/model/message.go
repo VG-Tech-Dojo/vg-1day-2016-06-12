@@ -102,7 +102,7 @@ func NewMessage(body string) (*Message, error) {
 	return &Message{
 		Id:        id,
 		Body:      body,
-		CreatedAt: time.Now().String(),
+		CreatedAt: time.Now().Format("2006-01-02 15:04:05"),
 		// 1-1. CreatedAt に時刻をセットする
 		// ヒント: https://golang.org/pkg/time/
 		// 1-2. Username にユーザ名をセットする
