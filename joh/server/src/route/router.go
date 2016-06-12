@@ -70,5 +70,9 @@ func prepareBot() chan model.Message {
 	go b4.Run()
 	broadcaster.EntryInput <- b4
 
+	b5 := bot.NewWarikanBot(p.Input)
+	go b5.Run()
+	broadcaster.EntryInput <- b5
+
 	return broadcaster.MsgInput
 }
