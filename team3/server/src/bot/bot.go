@@ -63,7 +63,7 @@ func NewTimelineBot(out chan model.Message) (b *bot) {
 
 func NewUranaiBot(out chan model.Message) (b *bot) {
 	checker := &RegexpChecker{
-		Pattern: `^uranai`,
+		Pattern: `^neko`,
 	}
 	processer := &UranaiProcesser{}
 	return NewBot(checker, processer, out)
