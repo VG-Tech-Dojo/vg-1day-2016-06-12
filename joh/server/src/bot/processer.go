@@ -7,6 +7,8 @@ import (
 	"net/url"
 	"math/rand"
 	"time"
+	"strings"
+	"strconv"
 )
 
 type (
@@ -34,6 +36,11 @@ type (
 	}
 
 	UranaiProcesser struct {
+	}
+
+	WarikanProcesser struct {
+		Persons int
+		Money int
 	}
 )
 
@@ -71,5 +78,16 @@ func (p *UranaiProcesser) Process(msgIn *model.Message) *model.Message {
 	answers := []string{"大吉","吉","凶"}
 	rand.Seed(time.Now().UnixNano())
 	txt := answers[rand.Intn(len(answers))]
+	return &model.Message{Body: txt}
+}
+
+func (p *WarikanProcesser) Process(msgIn *model.Message) *model.Message {
+	r := strings.Split(msgIn.Body, " ")
+	money,_ := strconv.Atoi(r[1])
+	persons, _ := strconv.Atoi(r[2])
+
+	money_per_person := money / persons
+
+	txt := "一人当たり" + strconv.Itoa(money_per_person) + "円です．"
 	return &model.Message{Body: txt}
 }
