@@ -24,10 +24,11 @@ func CreateMessage(c echo.Context) error {
 		return err
 	}
 	body := m.Body
+	username := m.Username
 
 	// メッセージをつくる
 	// 1-2. ユーザ名も渡すようにする
-	message, err := model.NewMessage(body)
+	message, err := model.NewMessage(body, username)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%+v\n", err)
 		return err
@@ -64,20 +65,36 @@ func ReadMessage(c echo.Context) error {
 // 1-3. メッセージの更新
 func UpdateMessage(c echo.Context) error {
 	// model.Message を用意する
+	var m model.Message
 	// 受け取った json からメッセージ本文を取得する
+	if err := c.Bind(&m); err != nil {
+		fmt.Fprintf(os.Stderr, "%+v\n", err)
+		return err
+	}
+	body := m.Body
 
 	// id を受け取る
+	id, _ := strconv.Atoi(c.Param("id"))
 
 	// メッセージを読み込む
 	// ヒント: model.Message.LoadMessage()
+	if err := m.LoadMessage(id); err != nil {
+		fmt.Fprintf(os.Stderr, "%+v\n", err)
+		return err
+	}
 
 	// メッセージ本文を更新する
+	m.Body = body
 
 	// メッセージを保存する
 	// ヒント: model.Message.SaveMessage()
+	if err := m.SaveMessage(); err != nil {
+		fmt.Fprintf(os.Stderr, "%+v\n", err)
+		return err
+	}
 
 	// メッセージを json で返す
-	return nil
+	return c.JSON(http.StatusCreated, m)
 }
 
 // 1-4. メッセージの削除
@@ -122,10 +139,11 @@ func ObservableCreateMessage(ch chan model.Message) echo.HandlerFunc {
 			return err
 		}
 		body := m.Body
+		username := m.Username
 
 		// メッセージをつくる
 		// 1-2. ユーザ名も渡すようにする
-		message, err := model.NewMessage(body)
+		message, err := model.NewMessage(body, username)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%+v\n", err)
 			return err
