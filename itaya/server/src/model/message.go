@@ -108,8 +108,9 @@ func NewMessage(body string) (*Message, error) {
 		Body: body,
 		// 1-1. CreatedAt に時刻をセットする
 		// ヒント: https://golang.org/pkg/time/
-		CreatedAt: s,
+		CreatedAt: s, //CreatedAt: time.Now().String()
 		// 1-2. Username にユーザ名をセットする
+		//Username:
 	}, nil
 }
 
