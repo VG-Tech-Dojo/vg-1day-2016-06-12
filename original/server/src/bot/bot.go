@@ -60,3 +60,20 @@ func NewTimelineBot(out chan model.Message) (b *bot) {
 	processer.Init()
 	return NewBot(checker, processer, out)
 }
+
+func NewUranaiBot(out chan model.Message) (b *bot) {
+	checker := &RegexpChecker{
+		Pattern: `^uranai`,
+	}
+	processer := &UranaiProcesser{}
+	return NewBot(checker, processer, out)
+}
+
+func NewWarikanBot(out chan model.Message) (b *bot) {
+	checker := &RegexpChecker{
+		Pattern: `^warikan [0-9]+ [0-9]+`,
+	}
+	processer := &WarikanProcesser{}
+	return NewBot(checker, processer, out)
+}
+

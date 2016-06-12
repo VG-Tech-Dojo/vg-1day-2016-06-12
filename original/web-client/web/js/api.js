@@ -36,13 +36,13 @@ class API {
      * @param error
      * @returns {*}
      */
-    postMessage(body, success, error) {
+    postMessage(body, name, success, error) {
         var postMessageUri = this.baseUrl + "messages";
         return $.ajax({
             type: "post",
             url: postMessageUri,
             contentType: "application/json",
-            data: JSON.stringify({body:body})
+            data: JSON.stringify({body:body,user_name:name})
         })
         .done(function(data) { success(); console.log(data) })
         .fail(function() { error() });
