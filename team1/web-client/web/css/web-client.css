@@ -1,6 +1,6 @@
 body {
     font-family:-apple-system, ‘Helvetica Neue’,’Hiragino Kaku Gothic ProN’, ‘游ゴシック’,’メイリオ’,meiryo,sans-serif;
-    padding-top: 70px;
+    padding-top: 50px;
 }
 
 @media only screen and (min-width: 320px) {
@@ -40,4 +40,13 @@ body {
 .media-message-body {
     font-size: 14px;
     font-weight: normal;
+}
+
+.wrapper {
+  padding: 50px;
+}
+
+.contents {
+  background: #fff;
+  padding: 15px;
 }
