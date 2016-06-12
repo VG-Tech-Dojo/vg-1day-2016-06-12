@@ -3,7 +3,7 @@ function changeBackground(colors) {
   for (var i = 0; i < colors.length; i++) {
     gradation += ', ' + colors[i];
   }
-  gradation += ');'
+  gradation += ')'
   console.log(gradation);
   $('div.wrapper').css('background', gradation);
 }
