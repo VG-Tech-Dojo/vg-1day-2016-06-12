@@ -25,18 +25,14 @@ class MessageTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         self.messageLabel.text = nil
-        // 1-1 時刻表示用ラベルの再利用処理
         self.datetimeLabel.text = nil
-        
-        // 1-2 ユーザ名表示用ラベルの再利用処理
+        self.usernameLabel.text = nil
     }
     
     func setupComponentsWithMessage(message: Message) {
         self.messageLabel.text = message.body
-        // 1-1 時刻データの表示処理追加
         self.datetimeLabel.text = message.date
-
-        // 1-2 ユーザ名データの表示処理追加
+        self.usernameLabel.text = message.username
     }
     
     func handleLongPress(recognizer: UILongPressGestureRecognizer) {
