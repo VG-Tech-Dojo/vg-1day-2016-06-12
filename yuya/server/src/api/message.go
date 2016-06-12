@@ -24,7 +24,6 @@ func CreateMessage(c echo.Context) error {
 		return err
 	}
 	body := m.Body
-
 	// メッセージをつくる
 	// 1-2. ユーザ名も渡すようにする
 	message, err := model.NewMessage(body)
