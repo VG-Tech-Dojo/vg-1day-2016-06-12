@@ -77,3 +77,8 @@ func (p *UranaiProcesser) Process(msgIn *model.Message) *model.Message {
 	}
 	return &model.Message{Body: answer[rand.Intn(len(answer))]}
 }
+
+func (p *UranaiProcesser) Process(msgIn *model.Message) *model.Message {
+		txt := "1人あたり" + p.Name + "円です"
+	return &model.Message{Body: txt}
+}
