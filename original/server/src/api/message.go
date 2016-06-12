@@ -23,6 +23,7 @@ func CreateMessage(c echo.Context) error {
 		fmt.Fprintf(os.Stderr, "%+v\n", err)
 		return err
 	}
+	// 投稿内容
 	body := m.Body
 
 	// メッセージをつくる
