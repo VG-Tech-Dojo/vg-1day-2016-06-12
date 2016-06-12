@@ -31,18 +31,19 @@ class API {
      * メッセージ投稿
      * POST: messages
      *
+     * @param user_name
      * @param body
      * @param success
      * @param error
      * @returns {*}
      */
-    postMessage(body, success, error) {
+    postMessage(user_name, body, success, error) {
         var postMessageUri = this.baseUrl + "messages";
         return $.ajax({
             type: "post",
             url: postMessageUri,
             contentType: "application/json",
-            data: JSON.stringify({body:body})
+            data: JSON.stringify({user_name:user_name, body:body})
         })
         .done(function(data) { success(); console.log(data) })
         .fail(function() { error() });
