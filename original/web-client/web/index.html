@@ -46,6 +46,10 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="postModalLabel">投稿</h4>
+    </div>
+      <div class="modal-user">
+        　ユーザ名<br>
+        　<input type="text" class="message-user"  value="" size="30" />
       </div>
       <div class="modal-body">
         メッセージ
@@ -119,8 +123,9 @@
    */
   $("#post-message").click(function() {
     $("#postModal").modal("hide");
+    var username = $(".message-user").val();
     var body = $(".message-body").val();
-    sendMessage(body);
+    sendMessage(body, username);
   });
 
   /**
