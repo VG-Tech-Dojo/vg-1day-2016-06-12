@@ -24,12 +24,14 @@ function appendMessages(data) {
  */
 function appendMessage(message) {
     // Bodyをエスケープ
+    var escapeUsername = $("<div/>").text(message.user_name).html();
     var escapeBody = $("<div/>").text(message.body).html();
+    var escapeDate = $("<div/>").text(message.created_at).html();
     var messageHTML =
         '<div class="media">' +
             '<div class="media-body">' +
-                //'<span class="media-message-name">名無しさん</span>  ' +
-                //'<span class="media-message-date">' + escapeDate + '</span>' + '<br>' +
+                '<span class="media-message-name">' + escapeUsername + '</span>' + '<br>' +
+                '<span class="media-message-date">' + escapeDate + '</span>' + '<br>' +
                 '<span class="media-message-body">' + escapeBody + '</span>' +
             '</div>' +
             '<div class="media-right">' +
@@ -56,15 +58,17 @@ function reloadMessages() {
 /**
  * メッセージの投稿
  *
+ * @param user_name
  * @param body
  */
-function sendMessage(body) {
+function sendMessage(user_name, body) {
     var success = function() {
+        $(".message-user_name").val("");
         $(".message-body").val("");
         reloadMessages();
     };
     var error = function() { console.log("error") };
-    (new API()).postMessage(body, success, error);
+    (new API()).postMessage(user_name, body, success, error);
 }
 
 /**
@@ -93,5 +97,3 @@ function deleteMessage(id) {
     var error = function() { console.log("error") };
     (new API()).deleteMessage(id, success, error);
 }
-
-

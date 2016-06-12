@@ -23,11 +23,12 @@ func CreateMessage(c echo.Context) error {
 		fmt.Fprintf(os.Stderr, "%+v\n", err)
 		return err
 	}
+	user_name := m.Username
 	body := m.Body
 
 	// メッセージをつくる
 	// 1-2. ユーザ名も渡すようにする
-	message, err := model.NewMessage(body)
+	message, err := model.NewMessage(user_name, body)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%+v\n", err)
 		return err
@@ -121,11 +122,12 @@ func ObservableCreateMessage(ch chan model.Message) echo.HandlerFunc {
 			fmt.Fprintf(os.Stderr, "%+v\n", err)
 			return err
 		}
+		user_name := m.Username
 		body := m.Body
 
 		// メッセージをつくる
 		// 1-2. ユーザ名も渡すようにする
-		message, err := model.NewMessage(body)
+		message, err := model.NewMessage(user_name, body)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%+v\n", err)
 			return err
