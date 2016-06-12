@@ -29,10 +29,10 @@ class PostViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    func postAndCloseWithMessageBody(messageBody: String, sender: AnyObject) {
+    func postAndCloseWithMessageBody(messageBody: String, username: String, sender: AnyObject) {
         
         // 1-2 ユーザ名データを投稿できるよう修正
-        MessageService.post(messageBody) {
+        MessageService.post(messageBody, username: username) {
             [weak self] (error) in
             
             self?.delegate?.postViewController(self!, didTouchUpCloseButton: sender)
@@ -67,13 +67,14 @@ class PostViewController: UIViewController, UITextViewDelegate {
     @IBAction func didTouchUpSendButton(sender: AnyObject) {
         self.messageTextView.resignFirstResponder()
         let messageBody = self.messageTextView.text ?? ""
+        let username = self.usernameTextField.text ?? ""
 
         if self.isUpdate {
             self.updateAndCloseWithMessageBody(messageBody, messageID: (self.message?.identifier)!, sender: sender)
             return
         }
         
-        self.postAndCloseWithMessageBody(messageBody, sender: sender)
+        self.postAndCloseWithMessageBody(messageBody, username: username, sender: sender)
     }
     
     // MARK: - UITextViewDelegate
