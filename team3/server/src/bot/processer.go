@@ -75,10 +75,12 @@ func (p *TimelineProcesser) Process(msgIn *model.Message) *model.Message {
 
 
 func (p *UranaiProcesser) Process(msgIn *model.Message) *model.Message {
-	answers := []string{"大吉","吉","凶"}
-	rand.Seed(time.Now().UnixNano())
-	txt := answers[rand.Intn(len(answers))]
-	return &model.Message{Body: txt}
+	txt := "http://news.biglobe.ne.jp/img/blnews/animal160128_02.jpg"
+	return &model.Message{Img: txt}
+	// answers := []string{"大吉","吉","凶"}
+	// rand.Seed(time.Now().UnixNano())
+	// txt := answers[rand.Intn(len(answers))]
+	// return &model.Message{Body: txt}
 }
 
 func (p *WarikanProcesser) Process(msgIn *model.Message) *model.Message {
