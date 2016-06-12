@@ -70,7 +70,7 @@ class MessageService {
         
         for json in JSONArray {
             // 1-1, 1-2 新規で追加した値のパース処理を追加
-            let message = Message(identifier: json["id"] as! Int?, body: json["body"] as! String)
+            let message = Message(identifier: json["id"] as! Int?, body: json["body"] as! String, date: json["created_at"] as! String)
             messages.append(message)
         }
         
