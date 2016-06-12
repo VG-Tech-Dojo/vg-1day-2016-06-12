@@ -5,6 +5,8 @@ import (
 	"math/rand"
 	"model"
 	"net/url"
+	"strconv"
+	"strings"
 	"time"
 
 	"github.com/ChimeraCoder/anaconda"
@@ -37,6 +39,11 @@ type (
 	// UranaiProcesser
 	// 占い結果を返す
 	UranaiProcesser struct {
+	}
+
+	// WarikanProcesser
+	// 割り勘の結果を返す
+	WarikanProcesser struct {
 	}
 )
 
@@ -74,4 +81,13 @@ func (p *UranaiProcesser) Process(msgIn *model.Message) *model.Message {
 	randNum := rand.Intn(3)
 	result := []string{"大吉", "吉", "凶"}
 	return &model.Message{Body: result[randNum]}
+}
+
+func (p *WarikanProcesser) Process(msgIn *model.Message) *model.Message {
+	warikan := strings.Split(msgIn.Body, " ")
+	amount, _ := strconv.Atoi(warikan[1])
+	member, _ := strconv.Atoi(warikan[2])
+	warikanResult := amount / member
+	var answer string = "1人" + strconv.Itoa(warikanResult) + "円です。"
+	return &model.Message{Body: answer}
 }
