@@ -24,6 +24,10 @@ function appendMessages(data) {
  */
 function appendMessage(message) {
     // Bodyをエスケープ
+    var colors = ["#FF0000", "#0000FF"];
+    // サーバサイドが実装できたら
+    // var colors = message.colors;
+    changeBackground();
     var escapeUsername = $("<div/>").text(message.user_name).html();
     var escapeBody = $("<div/>").text(message.body).html();
     var escapeDate = $("<div/>").text(message.created_at).html();
