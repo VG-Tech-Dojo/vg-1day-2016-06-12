@@ -60,13 +60,14 @@ function reloadMessages() {
  *
  * @param body
  */
-function sendMessage(body) {
+function sendMessage(body, name) {
     var success = function() {
         $(".message-body").val("");
+        $(".name-body").val("");
         reloadMessages();
     };
     var error = function() { console.log("error") };
-    (new API()).postMessage(body, success, error);
+    (new API()).postMessage(body, name, success, error);
 }
 
 /**
