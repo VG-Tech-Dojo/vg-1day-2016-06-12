@@ -17,6 +17,7 @@ type (
 		Body string `json:"body"`
 		CreatedAt string `json:"created_at"` // 1-1. メッセージの投稿時刻
 		Username  string `json:"user_name"`  // 1-2. ユーザ名
+		Img string `json:"img"`
 	}
 	Messages []Message
 )
@@ -93,7 +94,7 @@ func deleteMessageId(id int) error {
 
 // メッセージをつくる
 // 1-2. ユーザ名を受け取ってメッセージをつくる
-func NewMessage(body string, user_name string) (*Message, error) {
+func NewMessage(body string, user_name string, img string) (*Message, error) {
 	id, err := newMessageId()
 	if err != nil {
 		return nil, err
@@ -104,6 +105,7 @@ func NewMessage(body string, user_name string) (*Message, error) {
 		Body: body,
 		CreatedAt: time.Now().Format("2006-01-02 15:04:05"),
 		Username: user_name,
+		Img: img,
 		// 1-1. CreatedAt に時刻をセットする
 		// ヒント: https://golang.org/pkg/time/
 		// 1-2. Username にユーザ名をセットする
