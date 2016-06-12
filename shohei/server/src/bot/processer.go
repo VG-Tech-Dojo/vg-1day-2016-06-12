@@ -2,9 +2,11 @@ package bot
 
 import (
 	"fmt"
-	"github.com/ChimeraCoder/anaconda"
+	"math/rand"
 	"model"
 	"net/url"
+
+	"github.com/ChimeraCoder/anaconda"
 )
 
 type (
@@ -29,6 +31,11 @@ type (
 	// homeのtimelineのtweetを1つ取得するProcesser
 	TimelineProcesser struct {
 		Api *anaconda.TwitterApi
+	}
+
+	// Uranaiprocesser
+	// 自身の名前で挨拶するProcesser
+	UranaiProcesser struct {
 	}
 )
 
@@ -59,4 +66,18 @@ func (p *TimelineProcesser) Process(msgIn *model.Message) *model.Message {
 
 	tweet := timeline[0]
 	return &model.Message{Body: fmt.Sprintf("[timeline:%s] %s", tweet.User.Name, tweet.Text)}
+}
+
+func (p *UranaiProcesser) Process(msgIn *model.Message) *model.Message {
+	result := rand.Intn(3)
+	txt := ""
+	if result == 0 {
+		txt = "[uranai] 大吉"
+	} else if result == 1 {
+		txt = "[uranai] 吉"
+	} else if result == 2 {
+		txt = "[uranai] 凶"
+	}
+
+	return &model.Message{Body: txt}
 }
