@@ -3,13 +3,13 @@ package api
 import (
 	"model"
 
+	"fmt"
 	"net/http"
 	"os"
 	"strconv"
 	"sync"
 
 	"github.com/labstack/echo"
-	"github.com/pkg/errors"
 )
 
 // メッセージの投稿
@@ -20,7 +20,7 @@ func CreateMessage(c echo.Context) error {
 	// 受け取った json からメッセージ本文を取得する
 	// 1-2. ユーザ名も取得する
 	if err := c.Bind(&m); err != nil {
-		errors.Fprint(os.Stderr, err)
+		fmt.Fprint(os.Stderr, err)
 		return err
 	}
 	body := m.Body
@@ -29,13 +29,13 @@ func CreateMessage(c echo.Context) error {
 	// 1-2. ユーザ名も渡すようにする
 	message, err := model.NewMessage(body)
 	if err != nil {
-		errors.Fprint(os.Stderr, err)
+		fmt.Fprint(os.Stderr, err)
 		return err
 	}
 
 	// メッセージを保存する
 	if err := message.SaveMessage(); err != nil {
-		errors.Fprint(os.Stderr, err)
+		fmt.Fprint(os.Stderr, err)
 		return err
 	}
 
@@ -53,7 +53,7 @@ func ReadMessage(c echo.Context) error {
 
 	// メッセージを取得する
 	if err := m.LoadMessage(id); err != nil {
-		errors.Fprint(os.Stderr, err)
+		fmt.Fprint(os.Stderr, err)
 		return err
 	} else {
 		// メッセージを json で返す
@@ -96,7 +96,7 @@ func ReadMessages(c echo.Context) error {
 	// メッセージ一覧を取得する
 	messages, err := model.LoadMessages()
 	if err != nil {
-		errors.Fprint(os.Stderr, err)
+		fmt.Fprint(os.Stderr, err)
 		return err
 	}
 
@@ -118,7 +118,7 @@ func ObservableCreateMessage(ch chan model.Message) echo.HandlerFunc {
 		// 受け取った json からメッセージ本文を取得する
 		// 1-2. ユーザ名も取得する
 		if err := c.Bind(&m); err != nil {
-			errors.Fprint(os.Stderr, err)
+			fmt.Fprint(os.Stderr, err)
 			return err
 		}
 		body := m.Body
@@ -127,13 +127,13 @@ func ObservableCreateMessage(ch chan model.Message) echo.HandlerFunc {
 		// 1-2. ユーザ名も渡すようにする
 		message, err := model.NewMessage(body)
 		if err != nil {
-			errors.Fprint(os.Stderr, err)
+			fmt.Fprint(os.Stderr, err)
 			return err
 		}
 
 		// メッセージを保存する
 		if err := message.SaveMessage(); err != nil {
-			errors.Fprint(os.Stderr, err)
+			fmt.Fprint(os.Stderr, err)
 			return err
 		}
 
