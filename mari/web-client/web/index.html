@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>メッセージ</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/web-client.css">
+
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">メッセージ</a>
+    <button type="button" class="btn btn-primary navbar-btn pull-right" data-toggle="modal" data-target="#postModal">
+      <span class="glyphicon glyphicon-comment">
+    </button>
+  </div>
+</nav>
+<!-- /Navigation -->
+
+<!-- Message -->
+<div id="message-container">
+</div>
+<!-- /Message -->
+
+<!-- Modal 投稿 -->
+<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="postModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="postModalLabel">投稿</h4>
+      </div>
+      <div class="modal-body">
+        メッセージ
+        <p><textarea class="form-control message-body" rows="3"></textarea></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="post-message" class="btn btn-primary">投稿する</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Modal -->
+
+<!-- Modal 編集 -->
+<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="edit-modal-label">編集</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <input type="hidden" class="form-control" id="message-id">
+          </div>
+          <div class="form-group">
+            <label for="update-message-body" class="control-label">メッセージ</label>
+            <textarea class="form-control" id="update-message-body"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="update-message" class="btn btn-primary">更新する</button>
+        <button type="button" id="delete-message" class="btn btn-primary">削除する</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="js/api.js"></script>
+<script src="js/message.js"></script>
+<script>
+  // イベントの処理
+  /**
+   * 読み込み完了
+   */
+  $(document).ready(function () {
+    reloadMessages();
+  });
+
+  /**
+   * 編集画面表示
+   * 編集するため、編集のモーダルに必要なデータを渡す
+   */
+  $('#edit-modal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var body = button.data('body');
+    var id = button.data('id');
+
+    $(this).find('.modal-body textarea#update-message-body').val(body);
+    $(this).find('.modal-body input#message-id').val(id);
+  });
+
+  /**
+   * 投稿
+   */
+  $("#post-message").click(function() {
+    $("#postModal").modal("hide");
+    var body = $(".message-body").val();
+    sendMessage(body);
+  });
+
+  /**
+   * 更新
+   */
+  $("#update-message").click(function() {
+    $("#edit-modal").modal("hide");
+    var id = $("#edit-modal").find('.modal-body input#message-id').val();
+    var body = $("#edit-modal").find('.modal-body textarea#update-message-body').val();
+    updateMessage(id, body);
+  });
+
+  /**
+   * 削除
+   */
+  $("#delete-message").click(function() {
+    $("#edit-modal").modal("hide");
+    var id = $("#edit-modal").find('.modal-body input#message-id').val();
+    deleteMessage(id);
+  });
+
+</script>
+</body>
+</html>
