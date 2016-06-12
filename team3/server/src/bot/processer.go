@@ -5,8 +5,8 @@ import (
 	"github.com/ChimeraCoder/anaconda"
 	"model"
 	"net/url"
-	"math/rand"
-	"time"
+	// "math/rand"
+	// "time"
 	"strings"
 	"strconv"
 )

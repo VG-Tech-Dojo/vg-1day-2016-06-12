@@ -25,10 +25,11 @@ func CreateMessage(c echo.Context) error {
 	}
 	body := m.Body
 	user_name := m.Username
+	img := m.Img
 
 	// メッセージをつくる
 	// 1-2. ユーザ名も渡すようにする
-	message, err := model.NewMessage(body, user_name)
+	message, err := model.NewMessage(body, user_name, img)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%+v\n", err)
 		return err
@@ -124,10 +125,11 @@ func ObservableCreateMessage(ch chan model.Message) echo.HandlerFunc {
 		}
 		body := m.Body
 		user_name := m.Username
+		img := m.Img
 
 		// メッセージをつくる
 		// 1-2. ユーザ名も渡すようにする
-		message, err := model.NewMessage(body, user_name)
+		message, err := model.NewMessage(body, user_name, img)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%+v\n", err)
 			return err
