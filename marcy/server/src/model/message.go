@@ -106,6 +106,7 @@ func NewMessage(body string) (*Message, error) {
 		CreatedAt : time.Now().String(), 
 		// ヒント: https://golang.org/pkg/time/
 		// 1-2. Username にユーザ名をセットする
+		Username : body,
 	}, nil
 }
 
