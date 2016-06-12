@@ -61,10 +61,10 @@ func NewTimelineBot(out chan model.Message) (b *bot) {
 	return NewBot(checker, processer, out)
 }
 
-func NewUranaiBot(name string, pattern string, out chan model.Message) (b *bot) {
+func NewShindanBot(name string, pattern string, out chan model.Message) (b *bot) {
 	checker := &RegexpChecker{
 		Pattern: pattern,
 	}
-	processer := &UranaiProcesser{}
+	processer := &ShindanProcesser{}
 	return NewBot(checker, processer, out)
 }

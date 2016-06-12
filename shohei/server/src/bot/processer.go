@@ -2,7 +2,6 @@ package bot
 
 import (
 	"fmt"
-	"math/rand"
 	"model"
 	"net/url"
 
@@ -33,9 +32,9 @@ type (
 		Api *anaconda.TwitterApi
 	}
 
-	// Uranaiprocesser
+	// Shindanprocesser
 	// 自身の名前で挨拶するProcesser
-	UranaiProcesser struct {
+	ShindanProcesser struct {
 	}
 )
 
@@ -68,16 +67,15 @@ func (p *TimelineProcesser) Process(msgIn *model.Message) *model.Message {
 	return &model.Message{Body: fmt.Sprintf("[timeline:%s] %s", tweet.User.Name, tweet.Text)}
 }
 
-func (p *UranaiProcesser) Process(msgIn *model.Message) *model.Message {
-	result := rand.Intn(3)
-	txt := ""
-	if result == 0 {
-		txt = "[uranai] 大吉"
-	} else if result == 1 {
-		txt = "[uranai] 吉"
-	} else if result == 2 {
-		txt = "[uranai] 凶"
+func (p *ShindanProcesser) Process(msgIn *model.Message) *model.Message {
+	doc, err := goquery.NewDocument("https://shindanmaker.com/c/list?mode=hot")
+	if err != nil {
+		fmt.Print("url scarapping failed")
 	}
+	doc.Find("a").Each(func(_ int, s *goquery.Selection) {
+		url, _ := s.Attr("href")
+		fmt.Println(url)
+	})
 
 	return &model.Message{Body: txt}
 }
