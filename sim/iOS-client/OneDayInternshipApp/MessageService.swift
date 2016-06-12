@@ -42,8 +42,8 @@ class MessageService {
     }
     
     // 1-2 ユーザ名データを投稿できるよう修正
-    static func post(messageBody: String, completionHandler: NSError? -> Void) {
-        APIRequest.HTTPRequestWithURL(Endpoint.Messages.URL, HTTPMethod: "POST", JSONDictionary: ["body": messageBody]) { (data, response, error) in
+    static func post(messageBody: String, username: String, completionHandler: NSError? -> Void) {
+        APIRequest.HTTPRequestWithURL(Endpoint.Messages.URL, HTTPMethod: "POST", JSONDictionary: ["body": messageBody, "user_name": username]) { (data, response, error) in
                 completionHandler(error)
         }
     }
@@ -70,7 +70,7 @@ class MessageService {
         
         for json in JSONArray {
             // 1-1, 1-2 新規で追加した値のパース処理を追加
-            let message = Message(identifier: json["id"] as! Int?, body: json["body"] as! String, date: json["created_at"] as! String)
+            let message = Message(identifier: json["id"] as! Int?, body: json["body"] as! String, date: json["created_at"] as! String, username: json["user_name"] as! String)
             messages.append(message)
         }
         
