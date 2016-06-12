@@ -26,14 +26,14 @@ class MessageTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         self.messageLabel.text = nil
         // 1-1 時刻表示用ラベルの再利用処理
-        
+        self.datetimeLabel.text = nil
         // 1-2 ユーザ名表示用ラベルの再利用処理
     }
     
     func setupComponentsWithMessage(message: Message) {
         self.messageLabel.text = message.body
         // 1-1 時刻データの表示処理追加
-
+        self.datetimeLabel.text = message.createdat
         // 1-2 ユーザ名データの表示処理追加
     }
     
