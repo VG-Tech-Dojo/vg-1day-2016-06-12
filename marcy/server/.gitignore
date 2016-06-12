@@ -1,0 +1,10 @@
+# binary
+main
+
+pkg/
+
+# ignore directories
+_*/
+
+# local setting
+config.json
