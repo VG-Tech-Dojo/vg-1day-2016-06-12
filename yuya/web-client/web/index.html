@@ -123,8 +123,9 @@
    */
   $("#post-message").click(function() {
     $("#postModal").modal("hide");
+    var username = $(".message-user").val();
     var body = $(".message-body").val();
-    sendMessage(body);
+    sendMessage(body, username);
   });
 
   /**
