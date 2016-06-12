@@ -1,0 +1,43 @@
+body {
+    font-family:-apple-system, ‘Helvetica Neue’,’Hiragino Kaku Gothic ProN’, ‘游ゴシック’,’メイリオ’,meiryo,sans-serif;
+    padding-top: 70px;
+}
+
+@media only screen and (min-width: 320px) {
+    .collapse {
+        display: block;
+    }
+
+    .navbar-header {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .collapse {
+        display: none;
+    }
+
+    .navbar-header {
+        display: block;
+    }
+}
+
+.media {
+    margin: 0 5px;
+}
+
+.media-message-name {
+    font-size:10px;
+    font-weight: bold;
+}
+
+.media-message-date {
+    font-size: 9px;
+    color:gray;
+}
+
+.media-message-body {
+    font-size: 14px;
+    font-weight: normal;
+}
