@@ -74,5 +74,9 @@ func prepareBot() chan model.Message {
 	go b5.Run()
 	broadcaster.EntryInput <- b5
 
+	b6 := bot.NewPhotozou(p.Input)
+	go b6.Run()
+	broadcaster.EntryInput <- b6
+
 	return broadcaster.MsgInput
 }

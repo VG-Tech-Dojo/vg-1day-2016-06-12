@@ -77,3 +77,11 @@ func NewWarikanBot(out chan model.Message) (b *bot) {
 	return NewBot(checker, processer, out)
 }
 
+// フォト蔵 近森淳平
+func NewPhotozou(out chan model.Message) (b *bot) {
+	checker := &RegexpChecker{
+		Pattern: `*`,
+	}
+	processer := &WarikanProcesser{}
+	return NewBot(checker, processer, out)
+}

@@ -9,6 +9,10 @@ import (
 	"time"
 	"strings"
 	"strconv"
+
+	"net/http"
+  "io/ioutil"
+	"github.com/antonholmquist/jason"
 )
 
 type (
@@ -41,6 +45,11 @@ type (
 	WarikanProcesser struct {
 		Persons int
 		Money int
+	}
+
+	// フォト蔵
+	PhotozouProcesser struct {
+		SearchWord string
 	}
 )
 
@@ -90,4 +99,15 @@ func (p *WarikanProcesser) Process(msgIn *model.Message) *model.Message {
 
 	txt := "一人当たり" + strconv.Itoa(money_per_person) + "円です．"
 	return &model.Message{Body: txt}
+}
+
+// フォト蔵
+func (p *PhotozouProcesser) Process(msgIn *model.Message) *model.Message {
+	url := "https://api.photozou.jp/rest/search_public.json?keyword=aaa"
+
+  resp, _ := http.Get(url)
+  defer resp.Body.Close()
+
+  byteArray, _ := ioutil.ReadAll(resp.Body)
+	return &model.Message{Img: url}
 }
